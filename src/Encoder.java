@@ -14,7 +14,7 @@ public class Encoder {
             String input = Files.readString(Paths.get(inputPath), StandardCharsets.UTF_8);
 
             // Initialize output
-            ArrayList<Byte> outputList = new ArrayList<Byte>();
+            String output = "";
             
             // Initialize ASCII dictionary
             HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
@@ -27,9 +27,9 @@ public class Encoder {
             for (int i = 0; i < input.length(); i++) {
                 encodedStr += input.charAt(i);
                 if (i == input.length() - 1) {
-                    outputList.add(dictionary.get(encodedStr).byteValue());
+                    output += convertBinary(Integer.toBinaryString(dictionary.get(encodedStr)), Integer.toBinaryString(maxSize - 1).length());
                 } else  if (!dictionary.containsKey(encodedStr + input.charAt(i + 1))) {
-                    outputList.add(dictionary.get(encodedStr).byteValue());
+                    output += convertBinary(Integer.toBinaryString(dictionary.get(encodedStr)), Integer.toBinaryString(maxSize - 1).length());
                     if (dictionary.size() < maxSize) {
                         dictionary.put(encodedStr + input.charAt(i + 1), dictionary.size());
                     }
@@ -38,30 +38,40 @@ public class Encoder {
             }
 
             // Write output
-            byte[] output = new byte[outputList.size()];
-            for (int i = 0; i < outputList.size(); i++) {
-                output[i] = outputList.get(i).byteValue();
+            BinaryOut out = new BinaryOut(outputPath);
+            for (int i = 0; i < output.length(); i++) {
+                if (output.charAt(i) == '0') {
+                    out.write(false);
+                } else {
+                    out.write(true);
+                }
             }
-            Files.write(Paths.get(outputPath), output);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public void test() {
-        try {
-            byte[] input = Files.readAllBytes(Paths.get(outputPath));
-            for (int i = 0; i < input.length; i++) {
-                System.out.println(input[i]);
+            out.flush();
+
+            // Convert input to binary to compare with output
+            String inputBinary = "";
+            char[] inputChars = input.toCharArray();
+            for (char c : inputChars) {
+                inputBinary += convertBinary(Integer.toBinaryString(c), 8);
             }
+            System.out.println("\n" + "Input: " + inputBinary + "\n");
+            System.out.println("Output: " + output + "\n");
+            System.out.println("Input size: "+inputBinary.length()+"" + "\n");
+            System.out.println("Output size: "+output.length()+"" + "\n");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
+    public String convertBinary(String binary, int bit) {
+        String convertedBinary = binary;
+        for (int j = 0; j < (bit - binary.length()); j++) {
+            convertedBinary = "0" + convertedBinary;
+        }
+        return convertedBinary;
+    }
+
     public static void main(String[] args) {
         Encoder encoder = new Encoder();
-        encoder.encode();
-        encoder.test();
     }
 }
