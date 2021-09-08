@@ -4,14 +4,10 @@ import java.nio.charset.*;
 import java.nio.file.*;
 
 public class Encoder {
-    int maxSize = 512;
-    String inputPath = "lzw-file1.txt";
-    String outputPath = "output.dat";
-
-    public void encode() {
+    public void encode(String inputPath, int maxSize) {
         try {
             // Read input
-            String input = Files.readString(Paths.get(inputPath), StandardCharsets.UTF_8);
+            String input = Files.readString(Paths.get(inputPath + ".txt"), StandardCharsets.UTF_8);
 
             // Initialize output
             String output = "";
@@ -38,7 +34,7 @@ public class Encoder {
             }
 
             // Write output
-            BinaryOut out = new BinaryOut(outputPath);
+            BinaryOut out = new BinaryOut(inputPath + ".dat");
             for (int i = 0; i < output.length(); i++) {
                 if (output.charAt(i) == '0') {
                     out.write(false);
@@ -73,5 +69,8 @@ public class Encoder {
 
     public static void main(String[] args) {
         Encoder encoder = new Encoder();
+        encoder.encode("lzw-file1", 512);
+        encoder.encode("lzw-file2", 512);
+        encoder.encode("lzw-file3", 512);
     }
 }
