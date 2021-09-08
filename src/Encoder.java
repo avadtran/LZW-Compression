@@ -6,7 +6,7 @@ import java.nio.file.*;
 public class Encoder {
     int maxSize = 512;
     String inputPath = "lzw-file1.txt";
-    String outputPath = "output.txt";
+    String outputPath = "output.dat";
 
     public void encode() {
         try {
@@ -14,9 +14,7 @@ public class Encoder {
             String input = Files.readString(Paths.get(inputPath), StandardCharsets.UTF_8);
 
             // Initialize output
-            String output = "";
-            FileOutputStream fos = new FileOutputStream(new File(outputPath));
-            DataOutputStream dos = new DataOutputStream(fos);
+            ArrayList<Byte> outputList = new ArrayList<Byte>();
             
             // Initialize ASCII dictionary
             HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
@@ -29,9 +27,9 @@ public class Encoder {
             for (int i = 0; i < input.length(); i++) {
                 encodedStr += input.charAt(i);
                 if (i == input.length() - 1) {
-                    output += convertBinary(Integer.toBinaryString(dictionary.get(encodedStr)), Integer.toBinaryString(maxSize - 1).length());
+                    outputList.add(dictionary.get(encodedStr).byteValue());
                 } else  if (!dictionary.containsKey(encodedStr + input.charAt(i + 1))) {
-                    output += convertBinary(Integer.toBinaryString(dictionary.get(encodedStr)), Integer.toBinaryString(maxSize - 1).length());
+                    outputList.add(dictionary.get(encodedStr).byteValue());
                     if (dictionary.size() < maxSize) {
                         dictionary.put(encodedStr + input.charAt(i + 1), dictionary.size());
                     }
@@ -40,35 +38,30 @@ public class Encoder {
             }
 
             // Write output
-            dos.writeBytes(output);
-            dos.close();
-            fos.close();
-
-            // Convert input to binary to compare with output
-            String inputBinary = "";
-            char[] inputChars = input.toCharArray();
-            for (char c : inputChars) {
-                inputBinary += convertBinary(Integer.toBinaryString(c), 7);
+            byte[] output = new byte[outputList.size()];
+            for (int i = 0; i < outputList.size(); i++) {
+                output[i] = outputList.get(i).byteValue();
             }
-            System.out.println("\n" + "Input: " + inputBinary + "\n");
-            System.out.println("Output: " + output + "\n");
-            System.out.println("Input size: "+inputBinary.length()+"" + "\n");
-            System.out.println("Output size: "+output.length()+"" + "\n");
+            Files.write(Paths.get(outputPath), output);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void test() {
+        try {
+            byte[] input = Files.readAllBytes(Paths.get(outputPath));
+            for (int i = 0; i < input.length; i++) {
+                System.out.println(input[i]);
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public String convertBinary(String binary, int bit) {
-        String convertedBinary = binary;
-        for (int j = 0; j < (bit - binary.length()); j++) {
-            convertedBinary = "0" + convertedBinary;
-        }
-        return convertedBinary;
-    }
-
     public static void main(String[] args) {
         Encoder encoder = new Encoder();
         encoder.encode();
+        encoder.test();
     }
 }
