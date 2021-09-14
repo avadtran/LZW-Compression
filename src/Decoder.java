@@ -34,7 +34,7 @@ public class Decoder {
 			//System.out.print(binaryValue(binary.substring(i,i+9))+" ");
 			binVals.add(binaryValue(binary.substring(i,i+9)));
 		}
-		//System.out.println();
+		System.out.println(binVals);
 		
 		HashMap<Integer, String> dict = new HashMap<Integer,String>();
 		for(int i = 0;i<256;i++)
@@ -42,9 +42,9 @@ public class Decoder {
 		
 		int nextVal = 256;
 		int old = binVals.get(0);
-		out.print(dict.get(old));
-		String s = "";
-		String c = "";
+		String s = dict.get(old);
+		String c = ""+s.charAt(0);
+		out.print(s);
 		for(int i = 1;i<binVals.size();i++)
 		{
 			int next = binVals.get(i);
