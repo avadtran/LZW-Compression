@@ -29,7 +29,7 @@ public class Decoder {
 		
 		ArrayList<Integer> binVals = new ArrayList<Integer>();
 		
-		for(int i = 0 ;i<binary.length()-9;i+=9)
+		for(int i = 0 ;i<=binary.length()-9;i+=9)
 		{
 			//System.out.print(binaryValue(binary.substring(i,i+9))+" ");
 			binVals.add(binaryValue(binary.substring(i,i+9)));

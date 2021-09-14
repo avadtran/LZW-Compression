@@ -19,6 +19,7 @@ public class Encoder {
             }
 
             // Encode output
+            
             String encodedStr = "";
             for (int i = 0; i < input.length(); i++) {
                 encodedStr += input.charAt(i);
@@ -32,6 +33,27 @@ public class Encoder {
                     encodedStr = "";
                 }
             }
+            
+            //Kevin's new encoder
+            /*
+            String P = ""+input.charAt(0);
+            String C= "";
+            for(int i =1;i<input.length();i++)
+            {
+            	C = ""+input.charAt(i);
+            	String combine = P+C;
+            	if(dictionary.containsKey(combine))
+            	{
+            		P = combine;
+            	}
+            	else
+            	{
+            		output+=convertBinary(Integer.toBinaryString(dictionary.get(P)),9);
+            		if(dictionary.size()<maxSize)
+            			dictionary.put(combine, dictionary.size());
+            		P = C;
+            	}
+            }*/
 
             // Write output
             BinaryOut out = new BinaryOut(inputPath + ".dat");
