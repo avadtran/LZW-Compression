@@ -98,8 +98,8 @@ public class Decoder {
 
 	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
-		//decode("lzw-file1.dat","lzw-decoded1.txt");
-		//decode("lzw-file2.dat","lzw-decoded2.txt");
+		decode("lzw-file1.dat","lzw-decoded1.txt");
+		decode("lzw-file2.dat","lzw-decoded2.txt");
 		decode("lzw-file3.dat","lzw-decoded3.txt");
 		
 		

@@ -71,8 +71,8 @@ public class Encoder {
 
     public static void main(String[] args) {
         Encoder encoder = new Encoder();
-        //encoder.encode("lzw-file1", 512);
-        //encoder.encode("lzw-file2", 512);
+        encoder.encode("lzw-file1", 512);
+        encoder.encode("lzw-file2", 512);
         encoder.encode("lzw-file3", 512);
     }
 }
