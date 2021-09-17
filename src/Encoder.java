@@ -19,6 +19,7 @@ public class Encoder {
             }
 
             // Encode output
+            
             String encodedStr = "";
             for (int i = 0; i < input.length(); i++) {
                 encodedStr += input.charAt(i);
@@ -32,6 +33,7 @@ public class Encoder {
                     encodedStr = "";
                 }
             }
+            
 
             // Write output
             BinaryOut out = new BinaryOut(inputPath + ".dat");
