@@ -61,7 +61,7 @@ public class Encoder {
           //create end time
             long endTime = System.nanoTime();
           //return total duration of encode() method in milliseconds
-            System.out.println("duration: "+((endTime - startTime)/1000000)+" milliseconds");
+            System.out.println("duration: "+((endTime - startTime))+" nanoseconds");
             
         } catch (IOException ex) {
             ex.printStackTrace();
