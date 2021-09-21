@@ -6,6 +6,8 @@ import java.nio.file.*;
 public class Encoder {
     public void encode(String inputPath, int maxSize) {
         try {
+        	//create start time
+        	long startTime = System.nanoTime();
             // Read input
             String input = Files.readString(Paths.get(inputPath + ".txt"), StandardCharsets.UTF_8);
 
@@ -16,6 +18,10 @@ public class Encoder {
             HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
             for (int i = 0; i <= 255; i++) {
                 dictionary.put(String.valueOf((char) i), i);
+            //create end time
+            long endTime = System.nanoTime();
+            //return total duration of encode() method in milliseconds
+            System.out.println("duration: "+((endTime - startTime)/1000000)+" milliseconds");
             }
 
             // Encode output
