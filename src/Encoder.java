@@ -18,12 +18,7 @@ public class Encoder {
             HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
             for (int i = 0; i <= 255; i++) {
                 dictionary.put(String.valueOf((char) i), i);
-            //create end time
-            long endTime = System.nanoTime();
-            //return total duration of encode() method in milliseconds
-            System.out.println("duration: "+((endTime - startTime)/1000000)+" milliseconds");
             }
-
             // Encode output
             
             String encodedStr = "";
@@ -62,6 +57,12 @@ public class Encoder {
             System.out.println("Output: " + output + "\n");
             System.out.println("Input size: "+inputBinary.length()+"" + "\n");
             System.out.println("Output size: "+output.length()+"" + "\n");
+            
+          //create end time
+            long endTime = System.nanoTime();
+          //return total duration of encode() method in milliseconds
+            System.out.println("duration: "+((endTime - startTime)/1000000)+" milliseconds");
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         }
