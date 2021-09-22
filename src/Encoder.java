@@ -55,8 +55,8 @@ public class Encoder {
             }
             System.out.println("\n" + "Input: " + inputBinary + "\n");
             System.out.println("Output: " + output + "\n");
-            System.out.println("Input size: "+inputBinary.length()+"" + "\n");
-            System.out.println("Output size: "+output.length()+"" + "\n");
+            System.out.println("Input size: "+inputBinary.length() + " bytes \n");
+            System.out.println("Output size: "+output.length() + " bytes \n");
             
           //create end time
             long endTime = System.nanoTime();
